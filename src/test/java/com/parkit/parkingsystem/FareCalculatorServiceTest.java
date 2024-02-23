@@ -134,9 +134,7 @@ public class FareCalculatorServiceTest {
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 
         ticket.setInTime(inTime);
-        //ticket.setVehicleRegNumber("AB15CD");
         ticket.setOutTime(outTime);
-        //ticket.setVehicleRegNumber("AB15CD");
         ticket.setParkingSpot(parkingSpot);
         fareCalculatorService.calculateFare(ticket);
         assertEquals(0, ticket.getPrice());
@@ -159,6 +157,37 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket);
         assertEquals((0), ticket.getPrice());
 
+    }
+
+    @Test
+    public void calculateFarCarWithDiscount() {
+        // with Car - discount 5% - ctd 95% du tarif plein
+        Date inTime = new Date();
+        inTime.setTime(System.currentTimeMillis() - ( 60 * 60 * 1000));
+        Date outTime = new Date();
+        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
+       //Ticket ticket = new Ticket(true);
+        ticket.setInTime(inTime);
+        ticket.setOutTime(outTime);
+        ticket.setVehicleRegNumber("AB15CD");
+        ticket.setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFare(ticket, true);
+        assertEquals(1.5*0.95,ticket.getPrice() );
+    }
+
+    @Test
+    public void calculateFareBikeWithDiscount() {
+        Date inTime = new Date();
+        inTime.setTime(System.currentTimeMillis() - ( 60 * 60 * 1000));
+        Date outTime = new Date();
+        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
+        //Ticket ticket = new Ticket(true);
+        ticket.setInTime(inTime);
+        ticket.setOutTime(outTime);
+        ticket.setVehicleRegNumber("AB15CD");
+        ticket.setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFare(ticket, true);
+        assertEquals(1*0.95,ticket.getPrice() );
     }
 
 }

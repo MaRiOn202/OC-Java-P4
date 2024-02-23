@@ -1,19 +1,19 @@
 package com.parkit.parkingsystem.service;
 
 import com.parkit.parkingsystem.constants.Fare;
-import com.parkit.parkingsystem.constants.Time;
 import com.parkit.parkingsystem.model.Ticket;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import static com.parkit.parkingsystem.constants.Time.THIRTY_MINUTES;
 
 
 public class FareCalculatorService {
 
-    public void calculateFare(Ticket ticket) {
+    public static final double THIRTY_MINUTES = 0.5;
+
+    public void calculateFare(Ticket ticket, boolean isDiscount) {             // + rajout d'un paramètre à false pour les tests déjà existants ?
         if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {
             throw new IllegalArgumentException("Out time provided is incorrect:" + ticket.getOutTime()
                     .toString());
@@ -24,7 +24,6 @@ public class FareCalculatorService {
 
         double duration = (double) Duration.between(inHour, outHour).truncatedTo(ChronoUnit.MINUTES)
                 .toMinutes() / 60;
-        //System.out.println("Duration : " + duration);
 
           if(duration <= THIRTY_MINUTES) {
               ticket.setPrice(0);
@@ -41,7 +40,15 @@ public class FareCalculatorService {
                   }
                   default:
                       throw new IllegalArgumentException("Unknown Parking Type");
+              } if (isDiscount)  {
+                   ticket.setPrice(ticket.getPrice()*0.95);
               }
         }
     }
+
+
+  public void calculateFare(Ticket ticket) {
+           calculateFare(ticket, false);
+
+  }
 }
