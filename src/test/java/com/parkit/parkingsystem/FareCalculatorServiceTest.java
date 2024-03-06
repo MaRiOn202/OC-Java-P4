@@ -19,12 +19,12 @@ public class FareCalculatorServiceTest {
     private Ticket ticket;
 
     @BeforeAll
-    private static void setUp() {
+    public static void setUp() {
         fareCalculatorService = new FareCalculatorService();
     }
 
     @BeforeEach
-    private void setUpPerTest() {
+    public void setUpPerTest() {
         ticket = new Ticket();
     }
 
@@ -57,7 +57,7 @@ public class FareCalculatorServiceTest {
     }
 
     @Test
-    public void calculateFareUnkownType() {
+    public void calculateFareUnknownType() {
         Date inTime = new Date();
         inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
         Date outTime = new Date();
@@ -145,14 +145,11 @@ public class FareCalculatorServiceTest {
     public void calculateFareBikeWithLessThan30minutesParkingTime() {
         Date inTime = new Date();
         inTime.setTime(System.currentTimeMillis() - ( 30 * 60 * 1000));
-        // 30 minutes
         Date outTime = new Date();
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
 
         ticket.setInTime(inTime);
-        //ticket.setVehicleRegNumber("AB15CD");
         ticket.setOutTime(outTime);
-        //ticket.setVehicleRegNumber("AB15CD");
         ticket.setParkingSpot(parkingSpot);
         fareCalculatorService.calculateFare(ticket);
         assertEquals((0), ticket.getPrice());
@@ -166,7 +163,7 @@ public class FareCalculatorServiceTest {
         inTime.setTime(System.currentTimeMillis() - ( 60 * 60 * 1000));
         Date outTime = new Date();
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
-       //Ticket ticket = new Ticket(true);
+       
         ticket.setInTime(inTime);
         ticket.setOutTime(outTime);
         ticket.setVehicleRegNumber("AB15CD");
@@ -181,7 +178,7 @@ public class FareCalculatorServiceTest {
         inTime.setTime(System.currentTimeMillis() - ( 60 * 60 * 1000));
         Date outTime = new Date();
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
-        //Ticket ticket = new Ticket(true);
+        
         ticket.setInTime(inTime);
         ticket.setOutTime(outTime);
         ticket.setVehicleRegNumber("AB15CD");
