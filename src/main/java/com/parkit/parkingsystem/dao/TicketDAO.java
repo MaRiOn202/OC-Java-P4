@@ -8,10 +8,7 @@ import com.parkit.parkingsystem.model.Ticket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 
 public class TicketDAO {
 
@@ -36,8 +33,9 @@ public class TicketDAO {
             logger.error("Error fetching next available slot",ex);
         }finally {
             dataBaseConfig.closeConnection(con);
-            return false;
+
         }
+        return false;
     }
 
     public Ticket getTicket(String vehicleRegNumber) {
@@ -65,8 +63,9 @@ public class TicketDAO {
             logger.error("Error fetching next available slot",ex);
         }finally {
             dataBaseConfig.closeConnection(con);
-            return ticket;
+
         }
+        return ticket;
     }
 
     public boolean updateTicket(Ticket ticket) {
@@ -86,4 +85,31 @@ public class TicketDAO {
         }
         return false;
     }
+
+    public int getNbTicket(Ticket ticket) {
+
+        Connection con = null;
+        int result = 0;
+
+        try {
+            con = dataBaseConfig.getConnection();
+            PreparedStatement ps = con.prepareStatement(DBConstants.GET_NB_TICKET);
+            ps.setString(1, ticket.getVehicleRegNumber());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                result = rs.getInt("nbTicket");
+            }
+            dataBaseConfig.closeResultSet(rs);
+            dataBaseConfig.closePreparedStatement(ps);
+
+            return result;
+
+        } catch (Exception ex) {
+            logger.error("Error when accounting for passage",ex);
+        } finally {
+            dataBaseConfig.closeConnection(con);
+        }
+    return result;
+    }
+    
 }
