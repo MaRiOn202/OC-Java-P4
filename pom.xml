@@ -142,29 +142,14 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                        <configuration>
-                            <!-- Sets the output directory for the code coverage report. -->
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-test</outputDirectory>
-                        </configuration>
                     </execution>
                 </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-report-plugin</artifactId>
-                    <version>3.2.3</version>
-                    <configuration>
-                        <outputDirectory>${project.reporting.outputDirectory}</outputDirectory>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.12.1</version>
-                    <configuration>
-                        <outputDirectory>${basedir}/target/site</outputDirectory>
-                    </configuration>
-                </plugin>
-            </plugins>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
+            </plugin>
+        </plugins>
     </build>
 </project>

@@ -65,7 +65,7 @@ public class ParkingService {
         return inputReaderUtil.readVehicleRegistrationNumber();
     }
 
-    public ParkingSpot getNextParkingNumberIfAvailable() throws Exception {
+    public ParkingSpot getNextParkingNumberIfAvailable() throws Exception, IllegalArgumentException  {
         int parkingNumber=0;
         ParkingSpot parkingSpot = null;
         try{
@@ -109,7 +109,7 @@ public class ParkingService {
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
             Date outTime = new Date();
             ticket.setOutTime(outTime);
-            if(ticketDAO.getNbTicket(ticket) >= 2) {
+            if(ticketDAO.getNbTicket(ticket) > 2) {
                 fareCalculatorService.calculateFare(ticket, true);
             }   else {
                 fareCalculatorService.calculateFare(ticket);

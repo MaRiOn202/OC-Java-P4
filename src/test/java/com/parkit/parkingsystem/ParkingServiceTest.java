@@ -43,7 +43,7 @@ public class ParkingServiceTest {
     }
 
     @Test
-    public void testProcessIncomingVehicle() throws Exception {
+    public void processIncomingVehicleTest() throws Exception {
         String  vehicleRegNumber = "ABCDEF";
         Integer id = 1;
 
@@ -60,7 +60,7 @@ public class ParkingServiceTest {
     }
 
     @Test
-    public void testProcessExitingVehicle() throws Exception {
+    public void processExitingVehicleTest() throws Exception {
 
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
         Ticket ticket = new Ticket();
@@ -79,7 +79,7 @@ public class ParkingServiceTest {
     }
 
     @Test
-    public void testProcessExitingVehicleUnableUpdate() throws Exception {
+    public void processExitingVehicleUnableUpdateTest() throws Exception {
 
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
@@ -92,13 +92,13 @@ public class ParkingServiceTest {
         when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(false);
         
         parkingService.processExitingVehicle();
-        
+        //verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
+        //assertThat();
         assertFalse(ticketDAO.updateTicket(ticket));
-
     }
 
     @Test
-    public void testGetNextParkingNumberIfAvailable() throws Exception {
+    public void getNextParkingNumberIfAvailableTest() throws Exception {
         
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,true);
 
@@ -110,7 +110,7 @@ public class ParkingServiceTest {
     }
 
     @Test
-    public void testGetNextParkingNumberIfAvailableParkingNumberNotFound() {
+    public void getNextParkingNumberIfAvailableParkingNumberNotFoundTest() {
          
         // numéro de stationnement introuvable - lever une exception
         when(inputReaderUtil.readSelection()).thenReturn(1);
@@ -122,9 +122,9 @@ public class ParkingServiceTest {
     }
 
     @Test
-    public void testGetNextParkingNumberIfAvailableParkingNumberWrongArgument() {
+    public void getNextParkingNumberIfAvailableParkingNumberWrongArgumentTest() {
         
-        when(inputReaderUtil.readSelection()).thenReturn(4);        //as null
+        when(inputReaderUtil.readSelection()).thenReturn(4);        //comme un null
 
         assertThrows(IllegalArgumentException.class, () -> parkingService.getNextParkingNumberIfAvailable(),
                 "Error parsing user input for type of vehicle");
