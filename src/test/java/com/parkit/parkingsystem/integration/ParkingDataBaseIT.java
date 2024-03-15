@@ -90,7 +90,7 @@ public class ParkingDataBaseIT {
         parkingService.processIncomingVehicle();
         Ticket ticket = ticketDAO.getTicket(inputReaderUtil.readVehicleRegistrationNumber());
 
-        assertEquals(ticket.getPrice(), ticket.getPrice() * 0.95);      //pas de plus value fonctionnellement 
+        assertEquals(ticket.getPrice(), ticket.getPrice() * 0.95);       
         assertTrue( ticketDAO.getNbTicket(ticket) >= 2);
         
     }
