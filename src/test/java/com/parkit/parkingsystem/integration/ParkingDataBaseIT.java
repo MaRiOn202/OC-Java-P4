@@ -77,7 +77,6 @@ public class ParkingDataBaseIT {
         parkingService.processExitingVehicle();
         Ticket ticket = ticketDAO.getTicket(inputReaderUtil.readVehicleRegistrationNumber());
         
-        //assert
         assertTrue(ticket.getPrice() >= 0);
         assertNotNull(ticket.getOutTime());
 

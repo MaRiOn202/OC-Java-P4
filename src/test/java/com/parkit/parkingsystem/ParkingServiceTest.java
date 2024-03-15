@@ -130,4 +130,5 @@ public class ParkingServiceTest {
                 "Error parsing user input for type of vehicle");
         
     }
+    
 }
